@@ -24,6 +24,30 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+Date.prototype.isValid = function () {
+    // An invalid date object returns NaN for getTime() and NaN is the only
+    // object not strictly equal to itself.
+    return this.getTime() === this.getTime();
+};
+
+// your first API endpoint... 
+app.get("/api/timestamp/:date_string", function (req, res) {
+  let input = req.params['date_string'];
+  let sol;
+  
+  if(input === ""){
+    sol = new Date();
+  }
+  
+  if (input.isValid() == true) {
+    sol = new Date(input);
+  }
+  else{
+    res.json({"error" : "Invalid Date"});
+  }
+  
+  res.json(sol);
+});
 
 
 // listen for requests :)
